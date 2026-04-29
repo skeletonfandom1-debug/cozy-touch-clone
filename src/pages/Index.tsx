@@ -1,13 +1,13 @@
-import { Star, Heart, CreditCard, MessageCircle, CheckCircle2, Play, Minus, Plus, Sparkles, Moon, Leaf } from "lucide-react";
-import { useState } from "react";
+import { Star, Heart, CreditCard, MessageCircle, Play, Sparkles, Moon, Leaf } from "lucide-react";
 import logo from "@/assets/logo.png";
 import heroOtter from "@/assets/hero-otter.png";
-import productMain from "@/assets/product-main.png";
 import video1 from "@/assets/video-1.png";
 import video2 from "@/assets/video-2.png";
 import video3 from "@/assets/video-3.png";
 import video4 from "@/assets/video-4.jpg";
 import cuddleBuddy from "@/assets/cuddle-buddy.jpg";
+import { CartDrawer } from "@/components/CartDrawer";
+import { ShopifyProductSection } from "@/components/ShopifyProductSection";
 
 const navLinks = [
   { label: "PRODUCT", href: "#product" },
@@ -61,14 +61,15 @@ const ScatteredStars = () => {
 };
 
 const Index = () => {
-  const [qty, setQty] = useState(1);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Top brand bar */}
-      <div className="bg-[hsl(var(--nav-bg))] py-5">
-        <div className="container flex justify-center">
+      <div className="bg-[hsl(var(--nav-bg))] py-5 relative">
+        <div className="container flex items-center justify-center">
           <img src={logo} alt="CozieTouch" className="h-9 md:h-11 w-auto" />
+        </div>
+        <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2">
+          <CartDrawer />
         </div>
       </div>
 
@@ -133,10 +134,13 @@ const Index = () => {
             </h2>
 
             <div className="mt-8 flex justify-center">
-              <button className="group inline-flex items-center gap-2 rounded-full bg-pink-gradient px-8 py-3.5 text-white font-semibold shadow-pink hover:scale-105 transition-transform">
+              <a
+                href="#product"
+                className="group inline-flex items-center gap-2 rounded-full bg-pink-gradient px-8 py-3.5 text-white font-semibold shadow-pink hover:scale-105 transition-transform"
+              >
                 <Star className="h-4 w-4 fill-current" />
                 <span className="italic">Buy Your Cozie</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -193,61 +197,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Product */}
-      <section id="product" className="py-12 md:py-20">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-10 md:gap-16 max-w-5xl mx-auto items-center">
-            <div className="rounded-2xl overflow-hidden shadow-card-soft">
-              <img src={productMain} alt="Cozie Touch otter on bed" className="w-full h-auto" loading="lazy" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <Stars className="text-amber-400" />
-                <span className="text-sm text-muted-foreground">3,579 Reviews</span>
-              </div>
-              <h2 className="mt-3 text-4xl md:text-5xl font-extrabold text-foreground">
-                Cozie Touch™
-              </h2>
-              <div className="mt-5 flex items-center gap-3">
-                <span className="text-2xl font-bold text-pink">$49.99</span>
-                <span className="text-lg text-muted-foreground line-through">$99.98</span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-pink-gradient text-white text-xs font-semibold px-3 py-1">
-                  <CheckCircle2 className="h-3 w-3" /> Save 50%
-                </span>
-              </div>
-              <ul className="mt-6 space-y-3">
-                {[
-                  "Supports a healthy sleep",
-                  "Rhythmic breathing technology and heartbeat sounds",
-                  "Alleviates stress & promotes calmness",
-                ].map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-sm md:text-base text-foreground">
-                    <CheckCircle2 className="h-5 w-5 text-pink fill-pink/20 flex-shrink-0 mt-0.5" />
-                    <span className="font-medium">{b}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6">
-                <p className="text-sm text-muted-foreground mb-2">Quantity</p>
-                <div className="inline-flex items-center border border-border rounded-lg overflow-hidden">
-                  <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="px-3 py-2 hover:bg-muted">
-                    <Minus className="h-4 w-4" />
-                  </button>
-                  <span className="px-6 py-2 font-semibold min-w-[3rem] text-center">{qty}</span>
-                  <button onClick={() => setQty((q) => q + 1)} className="px-3 py-2 hover:bg-muted">
-                    <Plus className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-
-              <button className="mt-6 w-full md:w-80 rounded-full bg-pink-gradient text-white font-bold tracking-wider py-4 shadow-pink hover:scale-[1.02] transition-transform">
-                ADD TO CART
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Product (Shopify) */}
+      <ShopifyProductSection />
 
       {/* Cuddle buddy */}
       <section className="py-16 md:py-24">
